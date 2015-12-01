@@ -19,3 +19,8 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
+
+STATICFILES_DIRS = (
+    "/Users/kirill/projects/pyprojects/whirlingskirt/whirlingskirt/static",
+)
