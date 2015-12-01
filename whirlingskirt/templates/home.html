@@ -1,0 +1,40 @@
+<!--Home Template-->
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid home" style="background-image: url('{% static 'img/whirlingskirt_bg.jpg' %}')">
+      <h1 class="display-3">WhirlingSkirt</h1>
+      <p class="lead">Cupcake ipsum dolor. Sit amet liquorice cake marzipan.</p>
+      <hr class="m-y-md">
+      <p>Marshmallow jelly-o lollipop. Dessert chocolate cake marzipan powder tootsie roll powder liquorice. Sweet gingerbread sugar plum jelly.
+          Ice cream cotton candy chupa chups gummies liquorice candy tootsie roll.</p>
+      <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Sign Up</a>
+          <a class="btn btn-secondary btn-lg" href="#" role="button">Login</a>
+      </p>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row features-wrapper">
+              <div class="col-sm-4">
+                <div class="card card-block">
+                  <h3 class="card-title">Special title treatment</h3>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card card-block">
+                  <h3 class="card-title">Special title treatment</h3>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card card-block">
+                  <h3 class="card-title">Special title treatment</h3>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+              </div>
+        </div>
+    </div>
+{% endblock %}

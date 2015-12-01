@@ -2,13 +2,27 @@
 <!doctype html>
 <html>
     <head>
-        <title>{{ title }}</title>
+        <title>{% block title %}WhirlingSkirt{% endblock %}</title>
         <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/font-awesome.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     </head>
     <body>
-        <p>main</p>
-        <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+
+        {% block content %}
+        {% endblock %}
+
+        {% block footer %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>WhirlingSkirt</p>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
     <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
     </body>
 </html>

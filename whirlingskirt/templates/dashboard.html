@@ -1,0 +1,80 @@
+{% extends 'main.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Dashboard | WhirlingSkirt
+{% endblock %}
+
+{% block content %}
+
+    {% block header %}
+        <div class="container-fluid header">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>
+                        <a href="#"><i class="fa fa-bars"></i></a>
+                        WhirlingSkirt
+                    </p>
+                </div>
+                <div class="col-sm-6 text-center">
+                     <div class="btn-group" role="group" aria-label="Navigation">
+                        <button type="button" class="btn btn-secondary btn-sm active">Dashboard</button>
+                        <button type="button" class="btn btn-secondary btn-sm">Customers</button>
+                    </div>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <button type="button" class="btn btn-primary btn-sm">Invite users</button>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="container-fluid">
+        <div class="row">
+            {% block view %}
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div class="card">
+                      <div class="card-header">
+                        <b>Balance</b>
+                      </div>
+                      <div class="card-block text-center">
+                          <h4 class="card-title">56,50</h4>
+                          <p class="card-text">Your current balance</p>
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Total revenue: 1829,25</li>
+                      </ul>
+                      <div class="card-block white">
+                          <table class="table table-sm stats">
+                              <thead>
+                                <tr>
+                                  <th>Invites</th>
+                                  <th>Registrations</th>
+                                  <th>Active users</th>
+                                  <th>Convertion rate</th>
+                                  <th>Transactions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>37</td>
+                                  <td>18</td>
+                                  <td>9</td>
+                                  <td>49%</td>
+                                  <td>10</td>
+                                </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-sm-5"></div>
+            {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
