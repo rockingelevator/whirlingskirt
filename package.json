@@ -1,0 +1,28 @@
+{
+  "name": "whirlingskirt",
+  "version": "1.0.0",
+  "description": "![Whirling Skirt](http://i67.tinypic.com/28sswu8.jpg)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rockingelevator/whirlingskirt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rockingelevator/whirlingskirt/issues"
+  },
+  "homepage": "https://github.com/rockingelevator/whirlingskirt",
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0",
+    "gulp-stylus": "^2.1.0",
+    "gulp-util": "^3.0.7",
+    "reactify": "^1.1.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.6.1"
+  }
+}
