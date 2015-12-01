@@ -16,9 +16,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Booking',
             fields=[
-                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
-                ('value', models.FloatField(blank=True, null=True)),
-                ('currency', models.CharField(choices=[('eur', 'EUR'), ('usd', 'USD'), ('uah', 'UAH')], default='eur', max_length=3)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('value', models.DecimalField(blank=True, decimal_places=2, null=True, max_digits=7)),
+                ('currency', models.CharField(default='eur', choices=[('eur', 'EUR'), ('usd', 'USD'), ('uah', 'UAH')], max_length=3)),
                 ('transaction_date', models.DateTimeField()),
                 ('service_provider', models.ForeignKey(to='accounts.ServiceProvider')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
@@ -27,9 +27,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Payment',
             fields=[
-                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
-                ('value', models.FloatField()),
-                ('currency', models.CharField(choices=[('eur', 'EUR'), ('usd', 'USD'), ('uah', 'UAH')], default='eur', max_length=3)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('value', models.DecimalField(decimal_places=2, max_digits=7)),
+                ('currency', models.CharField(default='eur', choices=[('eur', 'EUR'), ('usd', 'USD'), ('uah', 'UAH')], max_length=3)),
                 ('transaction_date', models.DateTimeField()),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],

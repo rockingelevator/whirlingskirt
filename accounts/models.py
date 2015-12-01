@@ -9,10 +9,11 @@ GENDERS =(
 )
 
 
-class Account(User):
+class Account(models.Model):
+    user = models.OneToOneField(User)
     gender = models.CharField(max_length=40, choices=GENDERS, default='none')
     currency = models.CharField(max_length=3, choices=transactions.CURRENCIES, default="eur")
-    balance = models.FloatField(null=True, blank=True, default=0)
+    balance = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, default=0)
     total_revenue = models.FloatField(null=True, blank=True, default=0)
 
     def __str__(self):
