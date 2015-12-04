@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
-from django.contrib.auth.models import User
+from accounts.models import Account
 from utils.decorators import anonymous_required
 
 
@@ -24,8 +24,8 @@ def signup(request):
     res = {}
     if invited_by_id:
         try:
-            invited_by = User.objects.get(pk=invited_by_id)
-        except User.DoesNotExist:
+            invited_by = Account.objects.get(pk=invited_by_id)
+        except Account.DoesNotExist:
             print('No such user')
         else:
             res['invited_by'] = invited_by.first_name + ' ' + invited_by.last_name

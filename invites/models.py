@@ -1,12 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
+from accounts.models import Account
 from accounts.models import ServiceProvider, GENDERS
 
 
 class Invite(models.Model):
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(Account)
     email = models.EmailField()
-    gender = models.CharField(max_length=40, choices=GENDERS, default="female")
+    #gender = models.CharField(max_length=40, choices=GENDERS, default="female")
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     message = models.TextField(blank=True, null=True)
