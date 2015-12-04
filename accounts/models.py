@@ -15,6 +15,7 @@ class Account(models.Model):
     currency = models.CharField(max_length=3, choices=transactions.CURRENCIES, default="eur")
     balance = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, default=0)
     total_revenue = models.FloatField(null=True, blank=True, default=0)
+    invited_by = models.ForeignKey(User, blank=True, null=True, related_name='invitee')
 
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
