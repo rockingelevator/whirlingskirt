@@ -45,10 +45,14 @@
                                 <label for="password">Password:</label>
                                 <input type="password" id="password" class="form-control">
                             </fieldset>
-                            <fieldset class="form-group">
-                                <label for="invitedBy">Invited by:</label>
-                                <input type="text" id="invitedBy" class="form-control" value="Mick Jagger" disabled>
-                            </fieldset>
+
+                            {% if invited_by %}
+                                <fieldset class="form-group">
+                                    <label for="invitedBy">Invited by:</label>
+                                    <input type="text" id="invitedBy" class="form-control" value="{{ invited_by }}" disabled>
+                                </fieldset>
+                            {% endif %}
+
                             <div class="row">
                                 <div class="col-xs-6">
                                     <button type="button" class="btn btn-secondary">Cancel</button>

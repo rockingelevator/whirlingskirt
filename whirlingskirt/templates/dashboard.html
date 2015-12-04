@@ -23,10 +23,23 @@
             </div>
             <div class="col-sm-3 text-right">
                 <button type="button" class="btn btn-primary btn-sm">Invite users</button>
-                <button type="button" class="btn btn-primary-outline btn-sm">
+                <!--<button type="button" class="btn btn-primary-outline btn-sm">
                     <i class="fa fa-male"></i>
                     Dexter Holland
-                </button>
+                </button>-->
+                <!-- Split button -->
+                <div class="btn-group">
+                  <button type="button" class="btn btn-secondary btn-sm">Dexter Holland</button>
+                  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!--<span class="sr-only">Toggle Dropdown</span>-->
+                  </button>
+                  <div class="dropdown-menu small">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Help</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </div>
+                </div>
             </div>
         </div>
     </div>

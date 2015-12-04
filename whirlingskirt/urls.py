@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^dashboard/', main_views.dashboard),
     url(r'^login/', main_views.login, name="login"),
     url(r'^signup/', main_views.signup, name="signup"),
-    url(r'^logout/', main_views.logout, name="logout"),
+    url(r'^logout/', main_views.logout_view, name="logout"),
 ]
