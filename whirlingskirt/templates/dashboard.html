@@ -6,34 +6,39 @@
     Dashboard | WhirlingSkirt
 {% endblock %}
 
-{% block content %}
-
-    {% block header %}
-        <div class="container-fluid header">
-            <div class="row">
-                <div class="col-sm-3">
-                    <p>
-                        <a href="#"><i class="fa fa-bars"></i></a>
-                        WhirlingSkirt
-                    </p>
-                </div>
-                <div class="col-sm-6 text-center">
-                     <div class="btn-group" role="group" aria-label="Navigation">
-                        <button type="button" class="btn btn-secondary btn-sm active">Dashboard</button>
-                        <button type="button" class="btn btn-secondary btn-sm">Customers</button>
-                    </div>
-                </div>
-                <div class="col-sm-3 text-right">
-                    <button type="button" class="btn btn-primary btn-sm">Invite users</button>
+{% block header %}
+    <div class="container-fluid header">
+        <div class="row">
+            <div class="col-sm-3">
+                <p>
+                    <a href="#"><i class="fa fa-bars"></i></a>
+                    WhirlingSkirt
+                </p>
+            </div>
+            <div class="col-sm-6 text-center">
+                 <div class="btn-group" role="group" aria-label="Navigation">
+                    <button type="button" class="btn btn-secondary btn-sm active">Dashboard</button>
+                    <button type="button" class="btn btn-secondary btn-sm">Customers</button>
                 </div>
             </div>
+            <div class="col-sm-3 text-right">
+                <button type="button" class="btn btn-primary btn-sm">Invite users</button>
+                <button type="button" class="btn btn-primary-outline btn-sm">
+                    <i class="fa fa-male"></i>
+                    Dexter Holland
+                </button>
+            </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}
 
+{% block content %}
     <div class="container-fluid">
         <div class="row">
             {% block view %}
                 <div class="col-sm-5 col-sm-offset-1">
+
+                    <!--Balance card-->
                     <div class="card">
                       <div class="card-header">
                         <b>Balance</b>
@@ -46,7 +51,7 @@
                         <li class="list-group-item">Total revenue: 1829,25</li>
                       </ul>
                       <div class="card-block white">
-                          <table class="table table-sm stats">
+                          <table class="table table-sm small">
                               <thead>
                                 <tr>
                                   <th>Invites</th>
@@ -68,13 +73,79 @@
                           </table>
                       </div>
                     </div>
+
+                    <!--Potential income card-->
+                    <div class="card">
+                      <div class="card-header">
+                        <b>Potential Income</b>
+                      </div>
+                          <ul class="list-group list-group-flush">
+                              <li class="list-group-item">
+                                  <p class="card-text">4 registered service providers</p>
+                                  <progress class="progress progress-success" value="25" max="100">25%</progress>
+                                  <p class="card-text">
+                                      <span class="label label-success">€980</span>&nbsp;
+                                      <small>from €2000</small>
+                                  </p>
+                              </li>
+                              <li class="list-group-item">
+                                  <p class="card-text">18 registered users</p>
+                                  <progress class="progress progress-success" value="55" max="100">25%</progress>
+                                  <p class="card-text">
+                                      <span class="label label-success">€140</span>&nbsp;
+                                      <small>from €260</small>
+                                  </p>
+                              </li>
+                          </ul>
+                    </div>
                 </div>
-                <div class="col-sm-5"></div>
+
+                <!--RIGHT COLUMN-->
+                <div class="col-sm-5">
+                    <div class="card">
+                      <div class="card-header">
+                        <b>Payments History</b>
+                      </div>
+                      <table class="table table-striped small white">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Invites</th>
+                              <th>Members</th>
+                              <th>Payment</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>December 3, 2015</td>
+                              <td>45</td>
+                              <td>15</td>
+                              <td>€200</td>
+                            </tr>
+                            <tr>
+                              <td>November 3, 2015</td>
+                              <td>45</td>
+                              <td>15</td>
+                              <td>€200</td>
+                            </tr>
+                          <tr>
+                              <td>October 3, 2015</td>
+                              <td>45</td>
+                              <td>15</td>
+                              <td>€200</td>
+                            </tr>
+                            <tr>
+                              <td>September 3, 2015</td>
+                              <td>45</td>
+                              <td>15</td>
+                              <td>€200</td>
+                            </tr>
+                          </tbody>
+                      </table>
+                    </div>
+                </div>
             {% endblock %}
         </div>
     </div>
 
-{% endblock %}
-
-{% block footer %}
 {% endblock %}

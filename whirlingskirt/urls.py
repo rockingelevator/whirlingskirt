@@ -21,5 +21,8 @@ from whirlingskirt import views as main_views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', main_views.home),
-    url(r'^dashboard/', main_views.dashboard)
+    url(r'^dashboard/', main_views.dashboard),
+    url(r'^login/', main_views.login, name="login"),
+    url(r'^signup/', main_views.signup, name="signup"),
+    url(r'^logout/', main_views.logout, name="logout"),
 ]
