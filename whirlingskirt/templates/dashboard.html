@@ -70,14 +70,14 @@
                                   <th>Invites</th>
                                   <th>Registrations</th>
                                   <th>Active users</th>
-                                  <th>Convertion rate</th>
+                                  <th>Conversion rate</th>
                                   <th>Transactions</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr>
                                   <td>{{ invites.count }}</td>
-                                  <td>{{ invites.registrations }}</td>
+                                  <td>{{ invites.total_registrations }}</td>
                                   <td>{{ invites.active_members }}</td>
                                   <td>{{ invites.conversion_rate }}%</td>
                                   <td>{{ transactions }}</td>
@@ -94,19 +94,19 @@
                       </div>
                           <ul class="list-group list-group-flush">
                               <li class="list-group-item">
-                                  <p class="card-text">4 registered service providers</p>
-                                  <progress class="progress progress-success" value="25" max="100">25%</progress>
+                                  <p class="card-text">{{ invites.sp_registrations }} registered service providers</p>
+                                  <progress class="progress progress-success" value="{{ bonuses.for_service_providers_percent }}" max="100"></progress>
                                   <p class="card-text">
-                                      <span class="label label-success">€980</span>&nbsp;
-                                      <small>from €2000</small>
+                                      <span class="label label-success">{{ balance.currency }}{{ bonuses.for_service_providers }}</span>&nbsp;
+                                      <small>from {{ balance.currency }}{{ potential_income.for_service_providers }}</small>
                                   </p>
                               </li>
                               <li class="list-group-item">
-                                  <p class="card-text">18 registered users</p>
-                                  <progress class="progress progress-success" value="55" max="100">25%</progress>
+                                  <p class="card-text">{{ invites.members_registrations }} registered users</p>
+                                  <progress class="progress progress-success" value="{{ bonuses.for_members_percent }}" max="100"></progress>
                                   <p class="card-text">
-                                      <span class="label label-success">€140</span>&nbsp;
-                                      <small>from €260</small>
+                                      <span class="label label-success">{{ balance.currency }}{{ bonuses.for_members }}</span>&nbsp;
+                                      <small>from {{ balance.currency }}{{ potential_income.for_members }}</small>
                                   </p>
                               </li>
                           </ul>

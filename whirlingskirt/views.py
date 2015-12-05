@@ -8,7 +8,7 @@ from transactions.models import Balance, Payment, Booking
 from invites.models import Invite
 from utils.decorators import anonymous_required
 from accounts.forms import SignUpForm
-
+from utils.transactions import BONUSES
 
 
 @anonymous_required
@@ -121,9 +121,14 @@ def dashboard(request):
         # conversion_rate
         conversion_rate = 0 if invites_count == 0 else ((members_count + service_providers_count)/invites_count) * 100
 
-        #transactions
+        # transactions
         members_transactions = Booking.objects.filter(account__in=members)
+
+        # return from each transactions: 20% from commission if transaction value more than bonus
+        # or 2% from transaction value if it's less than our bonus
+        members_transactions_total_bonus = sum([(x['value']*BONUSES['commission']['for_booking'])/100 if x['value'] < BONUSES['for']['member'] else BONUSES['for']['member']*BONUSES['commission']['for_provision']/100 for x in members_transactions])
         sp_transactions = Booking.objects.filter(service_provider__in=service_providers).exclude(account__in=members)
+        sp_transactions_total_bonus = sum([(x['value']*BONUSES['commission']['for_booking'])/100 if x['value'] < BONUSES['for']['sp'] else BONUSES['for']['sp']*BONUSES['commission']['for_provision']/100 for x in sp_transactions])
 
         return render(request, 'dashboard.html', {
             'my': {
@@ -136,11 +141,23 @@ def dashboard(request):
             },
             'invites': {
                 'count': invites_count,
-                'registrations': members_count,
+                'members_registrations': members_count,
+                'sp_registrations': service_providers_count,
+                'total_registrations': members_count + service_providers_count,
                 'conversion_rate': conversion_rate,
                 'active_members': active_members
             },
-            'transactions': members_transactions.count() + sp_transactions.count()
+            'transactions': members_transactions.count() + sp_transactions.count(),
+            'bonuses': {
+                'for_members': members_transactions_total_bonus,
+                'for_members_percent': int((members_transactions_total_bonus * members_count * BONUSES['for']['member'])/100),
+                'for_service_providers': sp_transactions_total_bonus,
+                'for_service_providers_percent': int((sp_transactions_total_bonus * service_providers_count * BONUSES['for']['sp'])/100)
+            },
+            'potential_income': {
+                'for_service_providers': service_providers_count * BONUSES['for']['sp'],
+                'for_members': members_count * BONUSES['for']['member']
+            }
         })
 
 
