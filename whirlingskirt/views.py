@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from accounts.models import Account
 from utils.decorators import anonymous_required
 from accounts.forms import SignUpForm
@@ -14,13 +14,13 @@ def home(request):
 
 
 @anonymous_required
-def login(request):
+def login_view(request):
     return render(request, 'login.html', {})
 
 
 @anonymous_required
 def signup(request):
-    invited_by = {}
+    invited_by = None
     if request.method == 'GET':
         invited_by_id = request.GET.get('invited_by', None)
         form = SignUpForm()
@@ -28,14 +28,27 @@ def signup(request):
         form = SignUpForm(request.POST)
         invited_by_id = request.POST.get('invited_by', None)
         if form.is_valid():
-            print('Valid!')
-            print(request.POST)
+            if invited_by_id:
+                try:
+                    invited_by = Account.objects.get(pk=invited_by_id)
+                except Account.DoesNotExist:
+                    pass
+            Account.objects.create_user(
+                form.cleaned_data['email'],
+                password=form.cleaned_data['password'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                invited_by=invited_by
+            )
+            new_user = authenticate(email=request.POST['email'],
+                                    password=request.POST['password'])
+            login(request, new_user)
             return HttpResponseRedirect('/dashboard/')
     if invited_by_id:
         try:
             invited_by_obj = Account.objects.get(pk=invited_by_id)
         except Account.DoesNotExist:
-            print('No such user')
+            pass
         else:
             invited_by = {
                 'user_id': invited_by_obj.id,

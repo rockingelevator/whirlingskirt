@@ -29,7 +29,7 @@
                     </div>
                     <div class="card-block white">
                         {{ form.non_field_errors }}
-                        <form action="{% url 'signup' %}" method="POST">
+                        <form action="{% url 'signup' %}?invited_by={{ invited_by.user_id }}" method="POST">
                             {% csrf_token %}
                             <fieldset class="form-group">
                                 {{ form.first_name.errors }}
