@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 
 {% load staticfiles %}
+{% load currency_tag %}
 
 {% block title %}
     Dashboard | WhirlingSkirt
@@ -55,12 +56,12 @@
                         <b>Balance</b>
                       </div>
                       <div class="card-block text-center">
-                          <h4 class="card-title">{{ balance.currency }}{{ balance.current }}</h4>
+                          <h4 class="card-title">{{ balance.currency|currency }}{{ balance.current }}</h4>
                           <p class="card-text">Your current balance</p>
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            Total revenue: {{ balance.currency }}{{ balance.total_revenue }}
+                            Total revenue: {{ balance.currency|currency }}{{ balance.total_revenue }}
                         </li>
                       </ul>
                       <div class="card-block white">
@@ -97,16 +98,16 @@
                                   <p class="card-text">{{ invites.sp_registrations }} registered service providers</p>
                                   <progress class="progress progress-success" value="{{ bonuses.for_service_providers_percent }}" max="100"></progress>
                                   <p class="card-text">
-                                      <span class="label label-success">{{ balance.currency }}{{ bonuses.for_service_providers }}</span>&nbsp;
-                                      <small>from {{ balance.currency }}{{ potential_income.for_service_providers }}</small>
+                                      <span class="label label-success">{{ balance.currency|currency }}{{ bonuses.for_service_providers }}</span>&nbsp;
+                                      <small>from {{ balance.currency|currency }}{{ potential_income.for_service_providers }}</small>
                                   </p>
                               </li>
                               <li class="list-group-item">
                                   <p class="card-text">{{ invites.members_registrations }} registered users</p>
                                   <progress class="progress progress-success" value="{{ bonuses.for_members_percent }}" max="100"></progress>
                                   <p class="card-text">
-                                      <span class="label label-success">{{ balance.currency }}{{ bonuses.for_members }}</span>&nbsp;
-                                      <small>from {{ balance.currency }}{{ potential_income.for_members }}</small>
+                                      <span class="label label-success">{{ balance.currency|currency }}{{ bonuses.for_members }}</span>&nbsp;
+                                      <small>from {{ balance.currency|currency }}{{ potential_income.for_members }}</small>
                                   </p>
                               </li>
                           </ul>

@@ -8,7 +8,7 @@ from transactions.models import Balance, Payment, Booking
 from invites.models import Invite
 from utils.decorators import anonymous_required
 from accounts.forms import SignUpForm
-from utils.transactions import BONUSES
+from utils.transactions import BONUSES, CURRENCIES
 
 
 @anonymous_required
