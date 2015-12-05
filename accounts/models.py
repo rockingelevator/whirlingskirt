@@ -63,7 +63,7 @@ class Account(AbstractBaseUser):
     invited_by = models.ForeignKey("self", blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    registration_date = models.DateTimeField()
+    registration_date = models.DateTimeField(auto_now_add=True, blank=True)
 
     objects = AccountManager()
 
@@ -100,7 +100,7 @@ class Account(AbstractBaseUser):
 class ServiceProvider(models.Model):
     owner = models.ForeignKey(Account)
     name = models.CharField(max_length=255)
-    registration_date = models.DateField()
+    registration_date = models.DateField(auto_now_add=True, blank=True)
 
     def __str__(self):
         return self.name

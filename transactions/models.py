@@ -12,8 +12,8 @@ class Booking(models.Model):
     transaction_date = models.DateTimeField()
 
     def __str__(self):
-        return "%s %s: %s %.2f" % (self.user.first_name,
-                                 self.user.last_name,
+        return "%s %s: %s %.2f" % (self.account.first_name,
+                                 self.account.last_name,
                                  self.currency,
                                  self.value)
 
@@ -27,8 +27,8 @@ class Payment(models.Model):
     def __str__(self):
         return "%s %.2f to %s %s at %s" % (self.currency,
                                          self.value,
-                                         self.user.first_name,
-                                         self.user.last_name,
+                                         self.account.first_name,
+                                         self.account.last_name,
                                          str(self.transaction_date))
 
 
@@ -38,7 +38,7 @@ class Balance(models.Model):
     current_balance = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
-        return "%s %s: %.2f %s" % (self.user.first_name,
-                                   self.user.last_name,
+        return "%s %s: %.2f %s" % (self.account.first_name,
+                                   self.account.last_name,
                                    self.current_balance,
                                    self.currency)
