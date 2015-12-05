@@ -1,7 +1,7 @@
 # utils/transaction.py
 
 CURRENCIES = (
-    ("eur", "EUR"),
-    ("usd", "USD"),
-    ("uah", "UAH")
+    ("eur", "€"),
+    ("usd", "$"),
+    ("uah", "₴")
 )

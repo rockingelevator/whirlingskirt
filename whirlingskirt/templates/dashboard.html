@@ -23,15 +23,13 @@
             </div>
             <div class="col-sm-3 text-right">
                 <button type="button" class="btn btn-primary btn-sm">Invite users</button>
-                <!--<button type="button" class="btn btn-primary-outline btn-sm">
-                    <i class="fa fa-male"></i>
-                    Dexter Holland
-                </button>-->
                 <!-- Split button -->
                 <div class="btn-group">
-                  <button type="button" class="btn btn-secondary btn-sm">Dexter Holland</button>
+                  <button type="button" class="btn btn-secondary btn-sm">
+                      <i class="fa fa-male"></i>
+                      {{ my.full_name }}
+                  </button>
                   <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <!--<span class="sr-only">Toggle Dropdown</span>-->
                   </button>
                   <div class="dropdown-menu small">
                     <a class="dropdown-item" href="#">Profile</a>
@@ -57,11 +55,13 @@
                         <b>Balance</b>
                       </div>
                       <div class="card-block text-center">
-                          <h4 class="card-title">56,50</h4>
+                          <h4 class="card-title">{{ balance.currency }}{{ balance.current }}</h4>
                           <p class="card-text">Your current balance</p>
                       </div>
                       <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Total revenue: 1829,25</li>
+                        <li class="list-group-item">
+                            Total revenue: {{ balance.currency }}{{ balance.total_revenue }}
+                        </li>
                       </ul>
                       <div class="card-block white">
                           <table class="table table-sm small">
@@ -76,11 +76,11 @@
                               </thead>
                               <tbody>
                                 <tr>
-                                  <td>37</td>
-                                  <td>18</td>
-                                  <td>9</td>
-                                  <td>49%</td>
-                                  <td>10</td>
+                                  <td>{{ invites.count }}</td>
+                                  <td>{{ invites.registrations }}</td>
+                                  <td>{{ invites.active_members }}</td>
+                                  <td>{{ invites.conversion_rate }}%</td>
+                                  <td>{{ transactions }}</td>
                                 </tr>
                               </tbody>
                           </table>

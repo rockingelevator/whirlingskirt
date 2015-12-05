@@ -5,7 +5,7 @@ from accounts.models import ServiceProvider
 
 
 class Booking(models.Model):
-    user = models.ForeignKey(Account)
+    account = models.ForeignKey(Account)
     service_provider = models.ForeignKey(ServiceProvider)
     value = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
     currency = models.CharField(max_length=3, choices=transactions.CURRENCIES, default="eur")
@@ -19,7 +19,7 @@ class Booking(models.Model):
 
 
 class Payment(models.Model):
-    user = models.ForeignKey(Account)
+    account = models.ForeignKey(Account)
     value = models.DecimalField(max_digits=7, decimal_places=2, )
     currency = models.CharField(max_length=3, choices=transactions.CURRENCIES, default='eur')
     transaction_date = models.DateTimeField()
@@ -33,7 +33,7 @@ class Payment(models.Model):
 
 
 class Balance(models.Model):
-    user = models.ForeignKey(Account)
+    account = models.ForeignKey(Account)
     currency = models.CharField(max_length=3, choices=transactions.CURRENCIES, default="eur")
     current_balance = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
 

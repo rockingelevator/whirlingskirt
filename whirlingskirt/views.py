@@ -1,8 +1,11 @@
+from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from accounts.models import Account
+from accounts.models import Account, ServiceProvider
+from transactions.models import Balance, Payment, Booking
+from invites.models import Invite
 from utils.decorators import anonymous_required
 from accounts.forms import SignUpForm
 
@@ -19,9 +22,10 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email', '')
         password = request.POST.get('password', '')
-        user = authenticate(email=email, password=password)
-        if user is not None:
-            login(request, user)
+        account = authenticate(email=email, password=password)
+        if account is not None:
+            request.session['account_id'] = account.id
+            login(request, account)
             return HttpResponseRedirect('/dashboard/')
         else:
             errors.append("Combination email/password is invalid")
@@ -74,7 +78,70 @@ def logout_view(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard.html', {})
+    my_id = request.session.get('account_id', '')
+    if not my_id:
+        return HttpResponseRedirect('/logout/')
+    try:
+        my = Account.objects.get(pk=my_id)
+    except Account.DoesNotExist:
+        return HttpResponseRedirect('/logout/')
+    else:
+
+        # declaring defaults
+        current_balance, currency, total_revenue = 0, '', 0
+
+        # current balance
+        try:
+            balance = Balance.objects.get(account=my)
+        except Balance.DoesNotExist:
+            pass
+        else:
+            current_balance = balance.current_balance
+            currency = balance.currency
+
+        # total revenue
+        payments = Payment.objects.filter(account=my)
+        total_revenue = sum([x['value'] for x in payments])
+
+        # invites
+        invites = Invite.objects.filter(author=my)
+        invites_count = invites.count()
+
+        # members
+        members = Account.objects.filter(invited_by=my).annotate(transactions=Count('booking'))
+        members_count = members.count()
+
+        # active members
+        active_members = sum([1 for x in members if x.transactions > 0])
+
+        # service providers
+        service_providers = ServiceProvider.objects.filter(owner__in=members)
+        service_providers_count = service_providers.count()
+
+        # conversion_rate
+        conversion_rate = 0 if invites_count == 0 else ((members_count + service_providers_count)/invites_count) * 100
+
+        #transactions
+        members_transactions = Booking.objects.filter(account__in=members)
+        sp_transactions = Booking.objects.filter(service_provider__in=service_providers).exclude(account__in=members)
+
+        return render(request, 'dashboard.html', {
+            'my': {
+                'full_name': "%s %s" % (my.first_name, my.last_name),
+            },
+            'balance': {
+                'currency': currency,
+                'current': current_balance,
+                'total_revenue': total_revenue
+            },
+            'invites': {
+                'count': invites_count,
+                'registrations': members_count,
+                'conversion_rate': conversion_rate,
+                'active_members': active_members
+            },
+            'transactions': members_transactions.count() + sp_transactions.count()
+        })
 
 
 def invite(request):
