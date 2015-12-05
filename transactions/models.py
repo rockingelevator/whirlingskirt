@@ -36,7 +36,6 @@ class Balance(models.Model):
     user = models.ForeignKey(Account)
     currency = models.CharField(max_length=3, choices=transactions.CURRENCIES, default="eur")
     current_balance = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
-    total_revenue = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return "%s %s: %.2f %s" % (self.user.first_name,

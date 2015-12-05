@@ -28,34 +28,41 @@
                         Sign Up
                     </div>
                     <div class="card-block white">
-                        <form>
+                        {{ form.non_field_errors }}
+                        <form action="{% url 'signup' %}" method="POST">
+                            {% csrf_token %}
                             <fieldset class="form-group">
-                                <label for="firstName">First name:</label>
-                                <input type="text" id="firstName" class="form-control">
+                                {{ form.first_name.errors }}
+                                <label for="first_name">First name:</label>
+                                <input type="text" id="first_name" name="first_name" class="form-control" value="{{ form.first_name.value }}">
                             </fieldset>
                             <fieldset class="form-group">
-                                <label for="lastName">Last name:</label>
-                                <input type="text" id="lastName" class="form-control">
+                                {{ form.last_name.errors }}
+                                <label for="last_name">Last name:</label>
+                                <input type="text" id="last_name" name="last_name" class="form-control" value="{{ form.last_name.value }}">
                             </fieldset>
                             <fieldset class="form-group">
+                                {{ form.email.errors }}
                                 <label for="email">Email:</label>
-                                <input type="email" id="email" class="form-control">
+                                <input type="email" id="email" name="email" class="form-control" value="{{ form.email.value }}">
                             </fieldset>
                             <fieldset class="form-group">
+                                {{ form.password.error }}
                                 <label for="password">Password:</label>
-                                <input type="password" id="password" class="form-control">
+                                <input type="password" id="password" name="password" class="form-control" value="{{ form.password.value }}">
                             </fieldset>
 
                             {% if invited_by %}
                                 <fieldset class="form-group">
-                                    <label for="invitedBy">Invited by:</label>
-                                    <input type="text" id="invitedBy" class="form-control" value="{{ invited_by }}" disabled>
+                                    <label for="invited_by">Invited by:</label>
+                                    <input type="text" class="form-control" value="{{ invited_by.full_name }}" disabled>
+                                    <input type="hidden" id="invited_by" name="invited_by" value="{{ invited_by.user_id }}">
                                 </fieldset>
                             {% endif %}
 
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <button type="button" class="btn btn-secondary">Cancel</button>
+                                    <a class="btn btn-secondary" href="{% url 'home' %}">Cancel</a>
                                 </div>
                                 <div class="col-xs-6 text-right">
                                   <button type="submit" class="btn btn-primary">Sign up</button>

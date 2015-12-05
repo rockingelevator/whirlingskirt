@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from accounts.models import Account
 from utils.decorators import anonymous_required
+from accounts.forms import SignUpForm
 
 
 
@@ -19,18 +20,28 @@ def login(request):
 
 @anonymous_required
 def signup(request):
-    invited_by_id = request.GET.get('invited_by', None)
-    invited_by = ''
-    res = {}
+    invited_by = {}
+    if request.method == 'GET':
+        invited_by_id = request.GET.get('invited_by', None)
+        form = SignUpForm()
+    elif request.method == 'POST':
+        form = SignUpForm(request.POST)
+        invited_by_id = request.POST.get('invited_by', None)
+        if form.is_valid():
+            print('Valid!')
+            print(request.POST)
+            return HttpResponseRedirect('/dashboard/')
     if invited_by_id:
         try:
-            invited_by = Account.objects.get(pk=invited_by_id)
+            invited_by_obj = Account.objects.get(pk=invited_by_id)
         except Account.DoesNotExist:
             print('No such user')
         else:
-            res['invited_by'] = invited_by.first_name + ' ' + invited_by.last_name
-
-    return render(request, 'signup.html', res)
+            invited_by = {
+                'user_id': invited_by_obj.id,
+                'full_name': invited_by_obj.first_name + ' ' + invited_by_obj.last_name
+            }
+    return render(request, 'signup.html', {'form': form, 'invited_by': invited_by})
 
 
 def logout_view(request):
