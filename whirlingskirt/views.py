@@ -15,7 +15,17 @@ def home(request):
 
 @anonymous_required
 def login_view(request):
-    return render(request, 'login.html', {})
+    errors = []
+    if request.method == 'POST':
+        email = request.POST.get('email', '')
+        password = request.POST.get('password', '')
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect('/dashboard/')
+        else:
+            errors.append("Combination email/password is invalid")
+    return render(request, 'login.html', {'errors': errors})
 
 
 @anonymous_required
