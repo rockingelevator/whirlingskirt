@@ -123,36 +123,18 @@
                           <thead>
                             <tr>
                               <th>Date</th>
-                              <th>Invites</th>
-                              <th>Members</th>
+                              <!--<th>Invites</th>
+                              <th>Members</th>-->
                               <th>Payment</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>December 3, 2015</td>
-                              <td>45</td>
-                              <td>15</td>
-                              <td>€200</td>
-                            </tr>
-                            <tr>
-                              <td>November 3, 2015</td>
-                              <td>45</td>
-                              <td>15</td>
-                              <td>€200</td>
-                            </tr>
-                          <tr>
-                              <td>October 3, 2015</td>
-                              <td>45</td>
-                              <td>15</td>
-                              <td>€200</td>
-                            </tr>
-                            <tr>
-                              <td>September 3, 2015</td>
-                              <td>45</td>
-                              <td>15</td>
-                              <td>€200</td>
-                            </tr>
+                            {% for payment in payments %}
+                                <tr>
+                                  <td>{{ payment.transaction_date }}</td>
+                                  <td>{{ balance.currency }}{{ payment.value }}</td>
+                                </tr>
+                            {% endfor %}
                           </tbody>
                       </table>
                     </div>

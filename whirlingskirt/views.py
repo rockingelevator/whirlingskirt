@@ -130,6 +130,9 @@ def dashboard(request):
         sp_transactions = Booking.objects.filter(service_provider__in=service_providers).exclude(account__in=members)
         sp_transactions_total_bonus = sum([(x['value']*BONUSES['commission']['for_booking'])/100 if x['value'] < BONUSES['for']['sp'] else BONUSES['for']['sp']*BONUSES['commission']['for_provision']/100 for x in sp_transactions])
 
+        # payments
+        payments = Payment.objects.filter(account=my).values('value', 'transaction_date')
+
         return render(request, 'dashboard.html', {
             'my': {
                 'full_name': "%s %s" % (my.first_name, my.last_name),
@@ -157,7 +160,8 @@ def dashboard(request):
             'potential_income': {
                 'for_service_providers': service_providers_count * BONUSES['for']['sp'],
                 'for_members': members_count * BONUSES['for']['member']
-            }
+            },
+            'payments': payments
         })
 
 
