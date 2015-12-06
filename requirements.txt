@@ -1,0 +1,5 @@
+Django==1.9
+Jinja2==2.8
+MarkupSafe==0.23
+psycopg2==2.6.1
+Unipath==1.1
