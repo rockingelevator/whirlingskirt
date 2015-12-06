@@ -126,14 +126,14 @@
                               <th>Date</th>
                               <!--<th>Invites</th>
                               <th>Members</th>-->
-                              <th>Payment</th>
+                              <th class="text-right">Payment</th>
                             </tr>
                           </thead>
                           <tbody>
                             {% for payment in payments %}
                                 <tr>
-                                  <td>{{ payment.transaction_date }}</td>
-                                  <td>{{ balance.currency }}{{ payment.value }}</td>
+                                  <td>{{ payment.transaction_date|date:'F j, Y' }}</td>
+                                  <td class="text-right">{{ balance.currency|currency }}{{ payment.value }}</td>
                                 </tr>
                             {% endfor %}
                           </tbody>

@@ -47,7 +47,7 @@ def signup(request):
                     invited_by = Account.objects.get(pk=invited_by_id)
                 except Account.DoesNotExist:
                     pass
-            Account.objects.create_user(
+            new_account = Account.objects.create_user(
                 form.cleaned_data['email'],
                 password=form.cleaned_data['password'],
                 first_name=form.cleaned_data['first_name'],
@@ -56,6 +56,7 @@ def signup(request):
             )
             new_user = authenticate(email=request.POST['email'],
                                     password=request.POST['password'])
+            request.session['account_id'] = new_account.id
             login(request, new_user)
             return HttpResponseRedirect('/dashboard/')
     if invited_by_id:
@@ -99,10 +100,6 @@ def dashboard(request):
             current_balance = balance.current_balance
             currency = balance.currency
 
-        # total revenue
-        payments = Payment.objects.filter(account=my)
-        total_revenue = sum([x['value'] for x in payments])
-
         # invites
         invites = Invite.objects.filter(author=my)
         invites_count = invites.count()
@@ -128,10 +125,21 @@ def dashboard(request):
         # or 2% from transaction value if it's less than our bonus
         members_transactions_total_bonus = sum([(x['value']*BONUSES['commission']['from_booking'])/100 if x['value'] < BONUSES['for']['member'] else BONUSES['for']['member']*BONUSES['commission']['from_provision']/100 for x in members_transactions.values()])
         sp_transactions = Booking.objects.filter(service_provider__in=service_providers).exclude(account__in=members)
-        sp_transactions_total_bonus = sum([(x['value']*BONUSES['commission']['from_booking'])/100 if x['value'] < BONUSES['for']['sp'] else BONUSES['for']['sp']*BONUSES['commission']['from_provision']/100 for x in sp_transactions])
+        sp_transactions_total_bonus = sum([(x['value']*BONUSES['commission']['from_booking'])/100 if x['value'] < BONUSES['for']['sp'] else BONUSES['for']['sp']*BONUSES['commission']['from_provision']/100 for x in sp_transactions.values()])
+        # percents
+        try:
+            bonus_for_members_percent = int((members_transactions_total_bonus * 100) / (members_count * BONUSES['for']['member']))
+        except ZeroDivisionError:
+            bonus_for_members_percent = 0
+        try:
+            bonus_for_service_providers_percent = int((sp_transactions_total_bonus * 100) / (service_providers_count * BONUSES['for']['sp']))
+        except ZeroDivisionError:
+            bonus_for_service_providers_percent = 0
 
         # payments
         payments = Payment.objects.filter(account=my).values('value', 'transaction_date')
+        #total_revenue
+        total_revenue = sum([x['value'] for x in payments]) + current_balance
 
         return render(request, 'dashboard.html', {
             'my': {
@@ -152,9 +160,9 @@ def dashboard(request):
             'transactions': members_transactions.count() + sp_transactions.count(),
             'bonuses': {
                 'for_members': "%.2f" % members_transactions_total_bonus,
-                'for_members_percent': int((members_transactions_total_bonus * 100) / (members_count * BONUSES['for']['member'])),
+                'for_members_percent': bonus_for_members_percent,
                 'for_service_providers': "%.2f" % sp_transactions_total_bonus,
-                'for_service_providers_percent': int((sp_transactions_total_bonus * 100) / (service_providers_count * BONUSES['for']['sp']))
+                'for_service_providers_percent': bonus_for_service_providers_percent
             },
             'potential_income': {
                 'for_service_providers': service_providers_count * BONUSES['for']['sp'],
